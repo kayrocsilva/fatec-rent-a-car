@@ -1,0 +1,21 @@
+﻿
+using Dapper;
+
+namespace Fatec_rent_car_API
+{
+    public class VehicleRepository : IVehicleRepository
+    {
+        private readonly IDbContext db;
+        public VehicleRepository(IDbContext db)
+        {
+            this.db = db;
+        }
+        public async Task<IEnumerable<Vehicle>> GetAll()
+        {
+            using (var conexao = db.GetConnection())
+            {
+                return await conexao.QueryAsync<Vehicle>("SELECT * FROM Vehicle");
+            }
+        }
+    }
+}
